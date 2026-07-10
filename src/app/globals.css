@@ -1,26 +1,79 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@config "../../tailwind.config.ts";
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--bg-root);
+  --color-foreground: var(--fg-root);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --bg-root: #020617;
+  --fg-root: #f1f5f9;
+  --glass-bg: rgb(15 23 42 / 0.6);
+  --glass-border: rgb(51 65 85 / 0.4);
+  --glass-highlight: rgb(255 255 255 / 0.05);
+  --accent: #0ea5e9;
+  --accent-glow: rgb(14 165 233 / 0.15);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(51 65 85) transparent;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-root);
+  color: var(--fg-root);
+  font-family: var(--font-sans, system-ui, sans-serif);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Glass utility classes ── */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px) saturate(120%);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px rgb(0 0 0 / 0.2), inset 0 1px 0 var(--glass-highlight);
+}
+
+.glass-hover {
+  transition: all 0.35s ease;
+}
+
+.glass-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgb(0 0 0 / 0.35), 0 0 30px var(--accent-glow),
+    inset 0 1px 0 var(--glass-highlight);
+}
+
+/* ── Bento grid card ── */
+.bento-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.bento-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 16px 48px rgb(0 0 0 / 0.3), 0 0 25px var(--accent-glow);
+}
+
+/* ── Accent glow ring for focus / active ── */
+.accent-ring {
+  outline: none;
+}
+
+.accent-ring:focus-visible {
+  ring: 2px solid var(--accent);
+  ring-offset: 2px;
+  ring-offset-color: #020617;
 }
